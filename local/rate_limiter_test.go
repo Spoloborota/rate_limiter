@@ -1,10 +1,10 @@
-package rate_limiter_test
+package local_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/Spoloborota/rate_limiter"
+	ratelimiter "github.com/Spoloborota/rate_limiter/local"
 	"github.com/stretchr/testify/require"
 )
 
@@ -31,7 +31,7 @@ func TestRateLimiter(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			rl := rate_limiter.NewRateLimiter(test.rate, test.interval)
+			rl := ratelimiter.NewRateLimiter(test.rate, test.interval)
 
 			for i := 0; i < len(test.expectedAllows); i++ {
 				require.Equal(t, test.expectedAllows[i], rl.Allow())
@@ -41,7 +41,7 @@ func TestRateLimiter(t *testing.T) {
 }
 
 func TestRateLimiter_ResetsAfterInterval(t *testing.T) {
-	rl := rate_limiter.NewRateLimiter(2, time.Second)
+	rl := ratelimiter.NewRateLimiter(2, time.Second)
 
 	require.True(t, rl.Allow())
 	require.True(t, rl.Allow())
